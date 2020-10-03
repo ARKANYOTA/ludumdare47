@@ -24,7 +24,7 @@ anims={
 safex=1
 safelen=40
 --inventory
-inv={w=0,s=0}
+inv={w=0,s=0,i=0}
 
 menu=true
 -->8
@@ -142,6 +142,15 @@ function _draw()
 		--sprite
 		spr(anims.afk[rot+1],x,y,1,1)
 		spr(16,cux,cuy)
+		
+		--inventory
+		spr(96,cx+20,cy+110,1,1)
+		spr(97,cx+35,cy+110,1,1)
+		spr(98,cx+50,cy+110,1,1)
+		printui(inv.w,22,119)
+		printui(inv.s,37,119)
+		printui(inv.i,52,119)
+		
 		if(bdebug)debug()
 	end
 end
@@ -190,6 +199,8 @@ function mining(x, y)
     inv.w+=1
   elseif mget(x,y)==81 then
     inv.s+=1
+  elseif mget(x,y)==82 then
+    inv.i+=1
   end
   mset(x,y,67)
 end
