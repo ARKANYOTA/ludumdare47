@@ -16,6 +16,8 @@ sprt=1
 anims={
 	afk={1,7,4,9},
 }
+
+safearea=1
 -->8
 --update
 function _update60() 
@@ -25,13 +27,11 @@ function _update60()
  			not (icol(x,y+7))	then 
  	x-=1
  end
- 
  if btn(➡️)  									and 
  			not (icol(x+7,y))			and 
  			not (icol(x+7,y+7))	then
   x+=1
  end
- 
  if btn(⬆️) 										and 
  			not (icol(x+1,y-1))	and 
  			not (icol(x+6,y-1))	then
@@ -53,7 +53,6 @@ function _update60()
 		cx = 0
 	end
 	--camera
-	camera(cx,cy)
 end
 -->8
 --draw
