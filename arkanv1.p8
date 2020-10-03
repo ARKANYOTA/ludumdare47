@@ -100,6 +100,23 @@ function _update60()
 		else
 			cx = 0
 		end
+		
+			--tp haut-bas g-d
+		if x>1016 then
+			x =1
+			cx = 0
+		end
+		if x<0 then
+		 x = 1015
+		 cx = 895
+		end
+		if y<-7 then
+			y=128
+		end
+		if y>128 then
+			y=-7
+		end
+		
 		--camera
 		cx=x-64+4
 		cy=0
@@ -114,6 +131,8 @@ function _draw()
 		print("main menu",64,64,7)
 	else
 		map(0,0)
+		map(0,0,1024,0, 8, 16)
+		map(120,0,-64,0, 8, 16)
 		--sprite
 		spr(anims.afk[rot+1],x,y,1,1)
 		spr(16,cux,cuy)
