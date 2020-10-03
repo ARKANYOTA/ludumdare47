@@ -4,8 +4,6 @@ __lua__
 --by arkanyota,
 --theobosse and 
 --yolwoocle
-
-menu = true
 bdebug = true
 clock=0
 --camera
@@ -39,7 +37,6 @@ function _update60()
 	 cpos()
 	 
 	 movement()
- 
 
 --hot and cold zones
 		if(clock%6==0)safex+=1
@@ -151,7 +148,6 @@ function cpos()
     cux-=8
   end
 end
-
 
 
 bdebug = true
@@ -279,6 +275,7 @@ if btn(⬅️) then
    mt=0
  end
 end
+
 function mining(x, y)
   if mget(x,y)==80 then
     inv.w+=1
@@ -291,7 +288,6 @@ function mining(x, y)
 end
 
 
-bdebug = true
 
 __gfx__
 00000000066666600666666006666660077777700777777007777770077777700777777007777770077777700000000000000000000000000000000000000000
