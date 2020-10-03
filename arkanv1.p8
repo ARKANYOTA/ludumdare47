@@ -7,10 +7,13 @@ bdebug = true
 cx = 0
 cy = 0
 --pos
+cux=0
+cuy=0
 x = 0
 y = 0
 rot=0
 sprt=1
+mt=0
 mine=0
 anims={
 	afk={1,7,4,9},
@@ -27,6 +30,7 @@ function _update60()
 			menu=false
 		end
 	else
+	 cpos()
 	 if btn(⬅️) then 
 	 	 if not (icol(x,y))			and 
 	 			  not (icol(x,y+7))	then 
@@ -57,27 +61,36 @@ function _update60()
 	 end
 	 
 	 if btn(🅾️) then
-   if rot==0 and 
-    icol(x+1,y-1)	and 
-	 		icol(x+6,y-1)	then
-      mine=1
+   if rot==0 and
+     fget(mget(cux/8, cuy/8))==0x1
+    	then
+       mine=1
+       mt+=1
    elseif rot==1 and
-     fget(mget(x/8+1, y/8))==0x1
+     fget(mget(cux/8, cuy/8))==0x1
      then
-     mine=2
+       mine=2
+       mt+=1
    elseif rot==2 and
-     fget(mget(x/8, y/8+1))==0x1
+     fget(mget(cux/8, cuy/8))==0x1
      then
-     mine=3
+       mine=3
+       mt+=1
    elseif rot==3 and
-     fget(mget(x/8-1, y/8))==0x1
+     fget(mget(cux/8, cuy/8))==0x1
      then
-     mine=4
+       mine=4
+       mt+=1
+   else
+     mt=0
    end
+ else
+   mt=0
  end
-	
-		x+=vx
-		y-=vy
+ 
+ if mt == 120 then
+   mset(cux/8, cuy/8)
+ end
 
 		vx=0
 		vy=0
@@ -102,23 +115,20 @@ function _draw()
 		map(0,0)
 		--sprite
 		spr(anims.afk[rot+1],x,y,1,1)
-		spr(16,35,45)
+		spr(16,cux,cuy)
 		if(bdebug)debug()
 	end
 end
 -->8
 function debug()
-		print("x: "..x,10,16)
-		print("y: "..y,10,22)
-		print("cx: "..cx,10,28)
-		print("cy: "..cy,10,34)
 		print("m: "..mine,10,40)
-		print("⧗: "..fget(mget(x/8, y/8-1)),10,46)
 		printui("x: "..x,10,16)
 		printui("y: "..y,10,22)
 		printui("cx: "..cx,10,28)
 		printui("cy: "..cy,10,34)
-		printui("lololololtest",0,0)
+		printui("m: "..mine,10,40)
+		printui("mt: "..mt,10,52)
+		printui("😐: "..fget(mget(cux/8, cuy/8)),10,46)
 end
 -->8
 --functions
@@ -131,6 +141,20 @@ end
 
 function printui(txt,txtx,txty,col)
  print(txt,txtx+cx,txty)
+end
+
+function cpos()
+  cux=((x+4)\8)*8
+  cuy=((y+4)\8)*8
+  if rot==0 then
+    cuy-=8
+  elseif rot==1 then
+    cux+=8
+  elseif rot==2 then
+    cuy+=8
+  elseif rot==3 then
+    cux-=8
+  end
 end
 __gfx__
 00000000066666600666666006666660077777700777777007777770077777700777777007777770077777700000000000000000000000000000000000000000
