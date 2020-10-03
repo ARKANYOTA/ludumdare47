@@ -20,22 +20,29 @@ anims={
 --update
 function _update60() 
 	--movement
-	if btn(➡️) then
-		vx+=1
-		rot=1
-	end
-	if btn(⬅️) then
-		vx-=1
-		rot=3
-	end
-	if btn(⬆️) then
-		vy+=1
-		rot=0
-	end
-	if btn(⬇️) then
-		vy-=1
-		rot=2
-	end
+ if btn(⬅️) 										and 
+ 			not (icol(x,y))			and 
+ 			not (icol(x,y+7))	then 
+ 	x-=1
+ end
+ 
+ if btn(➡️)  									and 
+ 			not (icol(x+7,y))			and 
+ 			not (icol(x+7,y+7))	then
+  x+=1
+ end
+ 
+ if btn(⬆️) 										and 
+ 			not (icol(x+1,y-1))	and 
+ 			not (icol(x+6,y-1))	then
+  y-=1
+ end
+ if btn(⬇️)  										and 
+ 			not (icol(x+1,y+8))	and 
+ 			not (icol(x+6,y+8))	then
+  y+=1
+ end
+
 	x+=vx
 	y-=vy
 	vx=0
@@ -63,6 +70,15 @@ function debug()
 		print("y: "..y,10,22)
 		print("cx: "..cx,10,28)
 		print("cy: "..cy,10,34)
+end
+-->8
+--functions
+function icol(px,py)
+  px/=8
+  py/=8
+	 return fget(
+	 	mget(px*16),
+	 						py*16)==0x1
 end
 __gfx__
 00000000066666600666666006666660077777700777777007777770077777700777777007777770077777700000000000000000000000000000000000000000
