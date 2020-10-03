@@ -32,9 +32,9 @@ menu=true
 mine = 0
 
 --pioche(pixaxe)
-p=1
+p=3
 --hache(axe)
-a=1
+a=3
 
 inv={w=0,s=0,i=0}
 open=false
@@ -434,14 +434,15 @@ function invsee()
 
 	--chiffre et sprite de ce que
 	--on a besoin pour craft
-	printui(req.p.w[p],56,93, wcolor)
 	spr(96,cx+60,92)
+	printui(req.p.w[p],56,93, wcolor)
 	
-	printui(req.p.s[p],71,93, scolor)
 	spr(97,cx+75,92)
-	
-	printui(req.p.i[p],85,93, icolor)
+	printui(req.p.s[p],71,93, scolor)
+
 	spr(98,cx+89,92)
+	printui(req.p.i[p],85,93, icolor)
+
 	
 	--hache
 	--upgrade hache
@@ -476,15 +477,16 @@ function invsee()
 
 	--chiffre et sprite de ce que
 	--on a besoin pour craft
-	printui(req.a.w[a],56,82, wcolor)
 	spr(96,cx+60,81)
+	printui(req.a.w[a],56,82, wcolor)
 	
-	printui(req.a.s[a],71,82, scolor)
 	spr(97,cx+75,81)
-	
-	printui(req.a.i[a],85,82, icolor)
+	printui(req.a.s[a],71,82, scolor)
+
 	spr(98,cx+89,81)
-	
+	printui(req.a.i[a],85,82, icolor)
+
+	--crafting
 	
 end
 
