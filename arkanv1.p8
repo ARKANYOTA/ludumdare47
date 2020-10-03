@@ -1,6 +1,9 @@
 pico-8 cartridge // http://www.pico-8.com
 version 29
 __lua__
+--by arkanyota,
+--theobosse and 
+--yolwoocle
 bdebug = true
 
 --camera
@@ -120,6 +123,7 @@ function _draw()
 	end
 end
 -->8
+--debug
 function debug()
 		print("m: "..mine,10,40)
 		printui("x: "..x,10,16)
@@ -175,163 +179,6 @@ anims={
 safearea=1
 menu=true
 mine = 0
--->8
---update
-function _update60() 
-	--movement
-	if menu and not bdebug then
-		if mid(1,btnp(),63)==btnp()then
-			menu=false
-		end
-	else
-	 if btn(⬅️) then 
-	 	 if not (icol(x,y))			and 
-	 			  not (icol(x,y+7))	then 
-	 	 x-=1
-	 	 end
-	 	rot=3
-	 end
-	 if btn(➡️) then
-	   if not (icol(x+7,y))			and 
-	 			  not (icol(x+7,y+7))	then
-	   x+=1
-	   end
-	 	rot=1
-	 end
-	 if btn(⬆️) then
-	   if not (icol(x+1,y-1))	and 
-	 			  not (icol(x+6,y-1))	then
-	   y-=1
-	   end
-	  rot=0
-	 end
-	 if btn(⬇️) then
-	   if not (icol(x+1,y+8))	and 
-	 			  not (icol(x+6,y+8))	then
-	   y+=1
-	   end
-	  rot=2
-	 end
-	 
-	 if btn(🅾️) then
-   if rot==0 and 
-    icol(x+1,y-1)	and 
-	 		icol(x+6,y-1)	then
-      mine=1
-   elseif rot==1 and
-     fget(mget(x/8+1, y/8))==0x1
-     then
-     mine=2
-   elseif rot==2 and
-     fget(mget(x/8, y/8+1))==0x1
-     then
-     mine=3
-   elseif rot==3 and
-     fget(mget(x/8-1, y/8))==0x1
-     then
-     mine=4
-   end
- end
-
-
-		if btn(🅾️) then
-   if rot==0 and 
-    icol(x+1,y-1)	and 
-	 		icol(x+6,y-1)	then
-      mine=1
-   elseif rot==1 and
-     fget(mget(x/8+1, y/8))==0x1
-     then
-     mine=2
-   elseif rot==2 and
-     fget(mget(x/8, y/8+1))==0x1
-     then
-     mine=3
-   elseif rot==3 and
-     fget(mget(x/8-1, y/8))==0x1
-     then
-     mine=4
-   end
- 	end
-
-
-		--camera pos
-		if (x)-cx>120 then
-			cx +=1
-		end
-		if (x)-cx<0 then
-			cx -=1
-		end
-		
-		--tp haut-bas g-d
-		if x>1016 then
-			x =1
-			cx = 0
-		end
-		if x<0 then
-		 x = 1015
-		 cx = 895
-		end
-		if y<-7 then
-			y=128
-		end
-		if y>128 then
-			y=-7
-		end
-		
-		--camera
-
-		cx=x-64+4
-		cy=0
-		camera(cx,cy)
-	end
-end
--->8
---draw
-function _draw()
-	cls()
-	if menu and not bdebug  then
-		print("main menu",64,64,7)
-	else
-		map(0,0)
-		--sprite
-		spr(anims.afk[rot+1],x,y,1,1)
-		spr(16,35,45)
-		if(bdebug)debug()
-	end
-end
--->8
-function debug()
-  local px = cx+10
-
-		print("x: "..x,10,16)
-		print("y: "..y,10,22)
-		print("cx: "..cx,10,28)
-		print("cy: "..cy,10,34)
-		print("m: "..mine,10,40)
-		print("⧗: "..fget(mget(x/8, y/8-1)),10,46)
-		printui("x: "..x,10,16)
-		printui("y: "..y,10,22)
-		printui("cx: "..cx,10,28)
-		printui("cy: "..cy,10,34)
-		printui("m: "..mine,10,40)
-		printui("m: "..rot,10,46)
-		printui("⧗: "..fget(mget(x/8, y/8-1)),10,4)
-
-		printui("lololololtest",0,0)
-end
--->8
---functions
-function icol(px,py)
-  px/=8
-  py/=8
-	 return fget(
-	 	mget(px,py))==0x1
-end
-
-function printui(txt,txtx,txty,col)
- print(txt,txtx+cx,txty)
-end
 __gfx__
 00000000066666600666666006666660077777700777777007777770077777700777777007777770077777700000000000000000000000000000000000000000
 00000000677775566777755667777556765555677655556776555567777655557776555555556777555567770000000000000000000000000000000000000000
