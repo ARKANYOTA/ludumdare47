@@ -92,7 +92,7 @@ function _update60()
  end
  
  if mt == 120 then
-   mset(cux/8, cuy/8)
+   mining(cux/8, cuy/8)
  end
 
 		vx=0
@@ -160,6 +160,12 @@ function cpos()
     cux-=8
   end
 end
+
+function mining(x, y)
+  mset(x,y,67)
+end
+
+
 bdebug = true
 
 --velocite
