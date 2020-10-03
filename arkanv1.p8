@@ -3,12 +3,16 @@ version 29
 __lua__
 bdebug = true
 
+<<<<<<< HEAD
+--velocite
+=======
 --camera
+>>>>>>> 2ea6b11464026f1bff074e6d67ad231918ad95aa
 cx = 0
 cy = 0
 --pos
-x = 0
-y = 0
+x = 64
+y = 46
 rot=0
 sprt=1
 mine=0
@@ -18,6 +22,7 @@ anims={
 
 safearea=1
 menu=true
+mine = 0
 -->8
 --update
 function _update60() 
@@ -76,6 +81,41 @@ function _update60()
    end
  end
 	
+<<<<<<< HEAD
+
+		if btn(🅾️) then
+   if rot==0 and 
+    icol(x+1,y-1)	and 
+	 		icol(x+6,y-1)	then
+      mine=1
+   elseif rot==1 and
+     fget(mget(x/8+1, y/8))==0x1
+     then
+     mine=2
+   elseif rot==2 and
+     fget(mget(x/8, y/8+1))==0x1
+     then
+     mine=3
+   elseif rot==3 and
+     fget(mget(x/8-1, y/8))==0x1
+     then
+     mine=4
+   end
+ 	end
+
+
+		--camera pos
+		if (x)-cx>120 then
+			cx +=1
+		end
+		if (x)-cx<0 then
+			cx -=1
+		end
+		
+		--tp haut-bas g-d
+		if x>1016 then
+			x =1
+=======
 		x+=vx
 		y-=vy
 
@@ -84,11 +124,26 @@ function _update60()
 		if (x*16)>120 then
 			cx =1
 		else
+>>>>>>> 2ea6b11464026f1bff074e6d67ad231918ad95aa
 			cx = 0
 		end
+		if x<0 then
+		 x = 1015
+		 cx = 895
+		end
+		if y<-7 then
+			y=128
+		end
+		if y>128 then
+			y=-7
+		end
+		
 		--camera
+<<<<<<< HEAD
+=======
 		cx=x-64+4
 		cy=0
+>>>>>>> 2ea6b11464026f1bff074e6d67ad231918ad95aa
 		camera(cx,cy)
 	end
 end
@@ -108,17 +163,29 @@ function _draw()
 end
 -->8
 function debug()
+<<<<<<< HEAD
+  local px = cx+10
+=======
 		print("x: "..x,10,16)
 		print("y: "..y,10,22)
 		print("cx: "..cx,10,28)
 		print("cy: "..cy,10,34)
 		print("m: "..mine,10,40)
 		print("⧗: "..fget(mget(x/8, y/8-1)),10,46)
+>>>>>>> 2ea6b11464026f1bff074e6d67ad231918ad95aa
 		printui("x: "..x,10,16)
 		printui("y: "..y,10,22)
 		printui("cx: "..cx,10,28)
 		printui("cy: "..cy,10,34)
+<<<<<<< HEAD
+		printui("m: "..mine,10,40)
+		printui("m: "..rot,10,46)
+		printui("⧗: "..fget(mget(x/8, y/8-1)),10,4)
+
+
+=======
 		printui("lololololtest",0,0)
+>>>>>>> 2ea6b11464026f1bff074e6d67ad231918ad95aa
 end
 -->8
 --functions
