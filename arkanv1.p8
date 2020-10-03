@@ -25,6 +25,7 @@ safex=1
 safelen=128
 --inventory
 inv={w=0,s=0,i=0}
+open=false
 
 -->8
 --update
@@ -39,8 +40,10 @@ function _update60()
 	 movement()
 
 --hot and cold zones
-		if(clock%6==0)safex+=1
-		if(safex>1024)safex=0
+  if not open then
+		  if(clock%6==0)safex+=1
+		  if(safex>1024)safex=0
+		end
 	 
 	 
 	 if mt == 120 then
@@ -95,13 +98,19 @@ function _draw()
 		spr(anims.afk[rot+1],x,y,1,1)
 		spr(16,cux,cuy)
 		
-		--inventory
+		--slots
 		spr(96,cx+20,cy+110,1,1)
 		spr(97,cx+35,cy+110,1,1)
 		spr(98,cx+50,cy+110,1,1)
 		printui(inv.w,22,119)
 		printui(inv.s,37,119)
 		printui(inv.i,52,119)
+		
+		--inventory
+		if open then
+		  rectfill(cx+25,cy+25,cx+100,cy+100,2)
+		  rect(cx+23,cy+23,cx+102,cy+102,1)
+		end
 		
 		if(bdebug)debug()
 	end
@@ -222,28 +231,32 @@ end
 
 
 function movement()
-if btn(⬅️) then 
+if btn(⬅️) and 
+	 not open then 
 	 	 if not (icol(x,y))			and 
 	 			  not (icol(x,y+7))	then 
 	 	 x-=1
 	 	 end
 	 	rot=3
 	 end
-	 if btn(➡️) then
+	 if btn(➡️) and 
+	 not open then
 	   if not (icol(x+7,y))			and 
 	 			  not (icol(x+7,y+7))	then
 	   x+=1
 	   end
 	 	rot=1
 	 end
-	 if btn(⬆️) then
+	 if btn(⬆️) and 
+	 not open then
 	   if not (icol(x+1,y-1))	and 
 	 			  not (icol(x+6,y-1))	then
 	   y-=1
 	   end
 	  rot=0
 	 end
-	 if btn(⬇️) then
+	 if btn(⬇️) and 
+	 not open then
 	   if not (icol(x+1,y+8))	and 
 	 			  not (icol(x+6,y+8))	then
 	   y+=1
@@ -251,7 +264,8 @@ if btn(⬅️) then
 	  rot=2
 	 end
 	 
-	 if btn(🅾️) then
+	 if btn(🅾️) and 
+	 not open then
    if rot==0 and
      fget(mget(cux/8, cuy/8))==0x1
     	then
@@ -273,6 +287,14 @@ if btn(⬅️) then
    end
  else
    mt=0
+ end
+ 
+ if btnp(❎) then
+   if open then
+     open=false
+   else
+     open=true
+   end
  end
 end
 
