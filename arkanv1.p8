@@ -36,8 +36,9 @@ function _update60()
 			menu=false
 		end
 	else
+		clock+=1
 	 cpos()
-	 if(clock%30==0)
+	 if(clock%60==0)safex+=1
 	 if btn(⬅️) then 
 	 	 if not (icol(x,y))			and 
 	 			  not (icol(x,y+7))	then 
@@ -135,12 +136,13 @@ function _draw()
 		map(0,0)
 		map(0,0,1024,0, 8, 16)
 		map(120,0,-64,0, 8, 16)
+		--hot zone
+		rectfill(0,0,safex*8,127,9)
+		
 		--sprite
 		spr(anims.afk[rot+1],x,y,1,1)
 		spr(16,cux,cuy)
 		if(bdebug)debug()
-		
-		rectfill(0,0,safex*8,127,9)
 	end
 end
 -->8
