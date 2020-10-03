@@ -178,10 +178,10 @@ function upmenu()
  if btnp(⬇️) then intmenu -=1 end
  if btnp(⬆️) then intmenu +=1 end
  if btnp(❎) or btnp(🅾️) then
-  if intmenu%2==1 then
+  if intmenu%2==0 then
  		menu=false
  	end
- 	if intmenu%2==0 then
+ 	if intmenu%2==1 then
  		tuto=not tuto
  	end
  end
@@ -195,12 +195,12 @@ function drmenu()
 	--print("arkan theodore yolwoocle elza")
 	--print(tuto,0,6,7)
 	--affiche
-	if intmenu%2==1 then
+	if intmenu%2==0 then
  	spr(130,56,40, 2,1)
  else
  	spr(128,56,40, 2,1)
  end
- if intmenu%2==0 then
+ if intmenu%2==1 then
  	spr(146,56,50, 2,1)
  else
  	spr(144,56,50, 2,1)
