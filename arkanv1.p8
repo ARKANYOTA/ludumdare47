@@ -17,10 +17,12 @@ y = 0
 rot=0
 sprt=1
 mt=0
-mine=0
 anims={
 	afk={1,7,4,9},
 }
+
+--inventory
+inv={w=0,s=0}
 
 safearea=1
 menu=true
@@ -67,22 +69,18 @@ function _update60()
    if rot==0 and
      fget(mget(cux/8, cuy/8))==0x1
     	then
-       mine=1
        mt+=1
    elseif rot==1 and
      fget(mget(cux/8, cuy/8))==0x1
      then
-       mine=2
        mt+=1
    elseif rot==2 and
      fget(mget(cux/8, cuy/8))==0x1
      then
-       mine=3
        mt+=1
    elseif rot==3 and
      fget(mget(cux/8, cuy/8))==0x1
      then
-       mine=4
        mt+=1
    else
      mt=0
@@ -130,9 +128,10 @@ function debug()
 		printui("y: "..y,10,22)
 		printui("cx: "..cx,10,28)
 		printui("cy: "..cy,10,34)
-		printui("m: "..mine,10,40)
 		printui("mt: "..mt,10,52)
-		printui("😐: "..fget(mget(cux/8, cuy/8)),10,46)
+		printui("wood: "..inv.w,10,58)
+		printui("stone: "..inv.s,10,64)
+		printui("😐: "..mget(cux/8, cuy/8),10,46)
 end
 -->8
 --functions
@@ -162,6 +161,11 @@ function cpos()
 end
 
 function mining(x, y)
+  if mget(x,y)==80 then
+    inv.w+=1
+  elseif mget(x,y)==81 then
+    inv.s+=1
+  end
   mset(x,y,67)
 end
 
