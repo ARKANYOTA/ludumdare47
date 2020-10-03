@@ -26,6 +26,8 @@ safelen=128
 --inventory
 inv={w=0,s=0,i=0}
 open=false
+p=1
+a=1
 
 -->8
 --update
@@ -43,8 +45,8 @@ function _update60()
 		if(clock%6==0)safex+=0.75
 		if(safex>1024)safex=0
 	 
-	 
-	 if mt == 120 then
+	 m=mget(cux/8, cuy/8)
+	 if mt==gettime(m) then
 	   mining(cux/8, cuy/8)
 	 end
 
@@ -160,6 +162,45 @@ function cpos()
   end
 end
 
+function canmine(material)
+  if material==80 then
+    return true
+  elseif material==81 then
+    return p>0
+  elseif material==82 then
+    return p>0
+  end
+end
+
+function gettime(material)
+  if material==80 then
+    if a==1 then
+      return 90
+    elseif a==2 then
+      return 70
+    elseif a==3 then
+      return 40
+    else 
+      return 120
+    end
+  elseif material==81 then
+    if p==1 then
+      return 120
+    elseif p==2 then
+      return 90
+    elseif p==3 then
+      return 70
+    end
+  elseif material==82 then
+    if p==1 then
+      return 160
+    elseif p==2 then
+      return 130
+    elseif p==3 then
+      return 100
+    end
+  end
+end
 
 bdebug = true
 
@@ -267,22 +308,24 @@ if btn(⬅️) and
 	  rot=2
 	 end
 	 
+	 m=mget(cux/8, cuy/8)
 	 if btn(🅾️) and 
-	 not open then
+	 not open and
+	 canmine(m) then
    if rot==0 and
-     fget(mget(cux/8, cuy/8))==mf
+     fget(m)==mf
     	then
        mt+=1
    elseif rot==1 and
-     fget(mget(cux/8, cuy/8))==mf
+     fget(m)==mf
      then
        mt+=1
    elseif rot==2 and
-     fget(mget(cux/8, cuy/8))==mf
+     fget(m)==mf
      then
        mt+=1
    elseif rot==3 and
-     fget(mget(cux/8, cuy/8))==mf
+     fget(m)==mf
      then
        mt+=1
    else
