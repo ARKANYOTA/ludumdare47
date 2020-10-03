@@ -23,7 +23,7 @@ menu=true
 --update
 function _update60() 
 	--movement
-	if menu then
+	if menu and not bdebug then
 		if mid(1,btnp(),63)==btnp()then
 			menu=false
 		end
@@ -69,7 +69,7 @@ end
 --draw
 function _draw()
 	cls()
-	if menu then
+	if menu and not bdebug  then
 		print("main menu",64,64,7)
 	else
 		map(0,0)
