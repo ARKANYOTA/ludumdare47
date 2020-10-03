@@ -4,37 +4,41 @@ __lua__
 bdebug = true
 
 --velocite
-vx = 0
-vy = 0
 cx = 0
 cy = 0
+
 --pos
-x = 0
-y = 0
+x = 64
+y = 46
 -->8
 function _update60() 
 	--movement
 	if btn(➡️) then
-		vx+=1
+		x+=1
 	end
 	if btn(⬅️) then
-		vx-=1
+		x-=1
 	end
 	if btn(⬆️) then
-		vy+=1
+		y-=1
 	end
 	if btn(⬇️) then
-		vy-=1
+		y+=1
 	end
-	x+=vx
-	y-=vy
-	vx=0
-	vy=0
-	if (x*16)>120 then
-		cx =1
-	else
-		cx = 0
+	
+	if (x)-cx>120 then
+		cx +=1
 	end
+	if (x)-cx<10 then
+		cx -=1
+	end
+	if (y)-cy>120 then
+		cy +=1
+	end
+	if (y)-cy<10 then
+		cy -=1
+	end
+	
 	--camera
 	camera(cx,cy)
 end
@@ -48,10 +52,10 @@ function _draw()
 end
 -->8
 function debug()
-		print("x: "..x,10,16)
-		print("y: "..y,10,22)
-		print("cx: "..cx,10,28)
-		print("cy: "..cy,10,34)
+		print("x: "..x,10+cx,16+cy,3)
+		print("y: "..y,10+cx,22+cy,3)
+		print("cx: "..cx,10+cx,28+cy,3)
+		print("cy: "..cy,10+cx,34+cy,3)
 end
 __gfx__
 00000000800000880000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
