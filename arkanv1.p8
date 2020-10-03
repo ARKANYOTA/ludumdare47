@@ -13,6 +13,7 @@ x = 0
 y = 0
 rot=0
 sprt=1
+mine=0
 anims={
 	afk={1,7,4,9},
 }
@@ -28,30 +29,54 @@ function _update60()
 			menu=false
 		end
 	else
-	 if btn(⬅️) 										and 
-	 			not (icol(x,y))			and 
-	 			not (icol(x,y+7))	then 
-	 	x-=1
+	 if btn(⬅️) then 
+	 	 if not (icol(x,y))			and 
+	 			  not (icol(x,y+7))	then 
+	 	 x-=1
+	 	 end
 	 	rot=3
 	 end
-	 if btn(➡️)  									and 
-	 			not (icol(x+7,y))			and 
-	 			not (icol(x+7,y+7))	then
-	  x+=1
+	 if btn(➡️) then
+	   if not (icol(x+7,y))			and 
+	 			  not (icol(x+7,y+7))	then
+	   x+=1
+	   end
 	 	rot=1
 	 end
-	 if btn(⬆️) 										and 
-	 			not (icol(x+1,y-1))	and 
-	 			not (icol(x+6,y-1))	then
-	  y-=1
+	 if btn(⬆️) then
+	   if not (icol(x+1,y-1))	and 
+	 			  not (icol(x+6,y-1))	then
+	   y-=1
+	   end
 	  rot=0
 	 end
-	 if btn(⬇️)  										and 
-	 			not (icol(x+1,y+8))	and 
-	 			not (icol(x+6,y+8))	then
-	  y+=1
+	 if btn(⬇️) then
+	   if not (icol(x+1,y+8))	and 
+	 			  not (icol(x+6,y+8))	then
+	   y+=1
+	   end
 	  rot=2
 	 end
+	 
+	 if btn(🅾️) then
+   if rot==0 and 
+    icol(x+1,y-1)	and 
+	 		icol(x+6,y-1)	then
+      mine=1
+   elseif rot==1 and
+     fget(mget(x/8+1, y/8))==0x1
+     then
+     mine=2
+   elseif rot==2 and
+     fget(mget(x/8, y/8+1))==0x1
+     then
+     mine=3
+   elseif rot==3 and
+     fget(mget(x/8-1, y/8))==0x1
+     then
+     mine=4
+   end
+ end
 	
 		x+=vx
 		y-=vy
@@ -84,6 +109,8 @@ function debug()
 		print("y: "..y,10,22)
 		print("cx: "..cx,10,28)
 		print("cy: "..cy,10,34)
+		print("m: "..mine,10,40)
+		print("⧗: "..fget(mget(x/8, y/8-1)),10,46)
 end
 -->8
 --functions
