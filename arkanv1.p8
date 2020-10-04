@@ -37,7 +37,7 @@ menu=true
 
 --de 1 a 3
 --pioche(pixaxe)
-p=1
+p=4
 --hache(axe)
 a=4
 
@@ -280,12 +280,14 @@ function gettime(material)
       return 50
     end
   elseif material==82 then
-    if p==1 then
+    if p==2 then
       return 160
-    elseif p==2 then
-      return 130
     elseif p==3 then
-      return 100
+      return 160
+    elseif p==4 then
+      return 140
+    else
+      return 140
     end
   elseif material==83 then
     if p==2 then
@@ -294,6 +296,8 @@ function gettime(material)
       return 75
     elseif p==4 then
       return 50
+    else
+      return 50
     end
   elseif material==84 then
     if p==2 then
@@ -301,6 +305,8 @@ function gettime(material)
     elseif p==3 then
       return 220
     elseif p==4 then
+      return 220
+    else
       return 220
     end
   else
