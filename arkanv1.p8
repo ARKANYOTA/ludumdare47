@@ -7,7 +7,7 @@ __lua__
 --yolwoocle
 --and elza
 sp = 0 --0=blanc; 1=jaune; 2=rouge
-bdebug = true
+bdebug=true
 clock=0
 --camera
 cx = 1000
@@ -112,11 +112,8 @@ function _update60()
 		  
 		  for i=1,17 do
 		    mat=mget(safex\8+15,i)
-		    if rnd(100)<4 and not
-		    (mat==81 or
-		    mat==82 or
-		    mat==83 or
-		    mat==84) then
+		    if rnd(100)<3 and 
+		       fget(mat)==0x0 then
 		      mset(safex\8+15,i,80)
 		    end
 		  end
