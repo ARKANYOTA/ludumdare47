@@ -21,6 +21,7 @@ rot=2
 sprt=1
 mt=0
 dead=false
+finish=true
 walking=false
 anims={
 	afk=  {1,7,4,9},
@@ -42,11 +43,11 @@ menu=true
 p=1
 --hache(axe)
 a=1
-f=1
+f=5
 pmax = 3
 amax = 3
 fmax = 4
-inv={w=16,s=0,i=0,c=0,m=0}
+inv={w=0,s=0,i=0,c=0,m=0}
 open=false
 mine=0
 --requied item
@@ -82,7 +83,7 @@ function _update60()
 	--movement
 	sfxtime-=1
 	
-	if menu and notbdebug then
+	if menu and not bdebug then
 		upmenu() 
 	else
 		clock+=1
@@ -195,6 +196,13 @@ function _update60()
 		cy=0
 		camera(cx,cy)
 		
+		--end
+		mat=mget(cux\8,cuy\8)
+		if btn(🅾️) then
+			if isfuse(mat) then
+			  finish=true
+			end
+	 end
 	end
 end
 -->8
@@ -205,7 +213,50 @@ function _draw()
 
 	if menu and notbdebug then
 		drmenu()
+	elseif dead and not finish then
+	 color(8)
+	 print("game over!",cx+50,cy+50)
+	 color(7)
+	 print("press [x]",cx+52,cy+60)
+	 rect(cx+45,cy+45,cx+93,cy+70,8)
+	 rectfill(cx+50,cy+56,cx+87,cy+56,12)
+	 
+	 --restart
+	 if btn(❎) then
+	    run()
+		end
+ elseif finish then
+  if fc==nil then
+    fc=cy+80
+  else
+    fc-=0.4
+  end
+  spr(104,cx+10,fc)
+  sspr(120,56,8,8,cx+2,cy+87,24,24)
+  color(8)
+  print("you win!",cx+54,cy+30)
+  color(7)
+  print("press [x]",cx+52,cy+40)
+  rect(cx+45,cy+25,cx+93,cy+50,8)
+	 rectfill(cx+50,cy+36,cx+87,cy+36,12)
+	 
+	 color(7)
+ print("mADE BY:",33,81)
+ line(33,87,62,87)
+ for i=0,3 do
+ 	spr(i+124,33,90+i*9)
+ end
+ print("theobosse - code",43,92)
+ print("arkanyota - code",43,101)
+ print("yolwoocle - code, art",43,110)
+ print("elza - sound",43,119)
+	 
+	 --restart
+	 if btn(❎) then
+	    run()
+		end
 	else
+	  --to set after
 		map(0,0)
 		map(0,0,1024,0, 8, 16)
 		map(120,0,-64,0, 8, 16)
@@ -269,7 +320,6 @@ function _draw()
 		
 		drawhotbar()
 	end
-
 end
 -->8
 --debug
@@ -419,6 +469,21 @@ function gettime(material)
     return 9999
   end
 end
+
+--detect if it's rocket
+  function isfuse(mat)
+    for i=74,80 do
+      if mat==i then
+        return true
+      end
+    end
+    for i=90,96 do
+      if mat==i then
+        return true
+      end
+    end
+    return false
+  end
 
 -->8
 -- menu
