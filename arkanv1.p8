@@ -784,8 +784,8 @@ function invsee()
 	
 	if amax>=a then
 		--hache vers upgrade
-	    rectfill(cx+44, 91, cx+44+9, 91+9, 1)
-	    rect(cx+44, 91, cx+44+9, 91+9, 0)
+		rectfill(cx+44, 91, cx+44+9, 91+9, 1)
+	 rect(cx+44, 91, cx+44+9, 91+9, 0)
 		spr(85+a, cx+45, 92)
 		--fleche entre 2
 		printui("->",36,93)
@@ -806,13 +806,13 @@ function invsee()
 		--chiffre et sprite de ce que
 		--on a besoin pour craft
 		spr(96,cx+60,92)
-		printui(req.f.w[f],56,93, wcolor)
+		printui(req.a.w[a],56,93, wcolor)
 		
 		spr(97,cx+75,92)
-		printui(req.f.s[f],71,93, scolor)
+		printui(req.a.s[a],71,93, scolor)
 	
 		spr(98,cx+89,92)
-		printui(req.f.i[f],85,93, icolor)
+		printui(req.a.i[a],85,93, icolor)
 	
 	else
 		printui("max lvl reached",37,92, 11)
@@ -838,7 +838,7 @@ function invsee()
 		rect(cx+25, 91, cx+25+9, 91+9, 0)
 	end
 	
-	printui(debugvar,0,0,11)
+	printui(req.p.w[p],0,0,11)
 end
 
 
@@ -881,7 +881,7 @@ function invup()
  	end
 	
  	if sobj==2 then --hache
- 	     if not (req.a.w[a] == nil  ) and 
+ 	     if not (req.a.w[a] == nil) and 
  	 		 not (inv.w < req.a.w[a]) and
 	 	 	 not (inv.s < req.a.s[a]) and
  	  	 not (inv.i < req.a.i[a]) then
