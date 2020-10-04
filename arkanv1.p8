@@ -5,7 +5,7 @@ __lua__
 --theobosse and 
 --yolwoocle
 sp = 0 --0=blanc; 1=jaune; 2=rouge
-bdebug = false
+bdebug = true
 clock=0
 --camera
 cx = 0
@@ -29,12 +29,10 @@ safelen=128
 
 safearea=1
 menu=true
-mine = 0
-
 
 --de 1 a 3
 --pioche(pixaxe)
-p=1
+p=2
 --hache(axe)
 a=1
 
@@ -147,7 +145,7 @@ function _draw()
 		if mt>0 and
 		canmine(m) then
 		  color(1)
-		  p=((mt/t)*100)\1
+		  pe=((mt/t)*100)\1
 		  lx=cux
 		  ly=cuy
 		  if rot==0 then
@@ -160,7 +158,7 @@ function _draw()
 		    lx-=8
 		  end
 		  
-		  print(p.."%",lx,ly)
+		  print(pe.."%",lx,ly)
 		  color(0)
 		end
 		
@@ -182,6 +180,8 @@ function debug()
 		printui("y: "..y,1,22)
 		printui("cx: "..cx,1,28)
 		printui("cy: "..cy,1,34)
+		printui("a: "..a,1,100)
+		printui("p: "..p,1,108)
 		
 		printui("mt: "..mt,1,52)
 		printui("safe: "..safex,1,70)
@@ -396,7 +396,7 @@ if btn(⬅️) then
  end
 end
 
-function mining(x, y)
+function mining(x,y)
   if mget(x,y)==80 then
     inv.w+=1
   elseif mget(x,y)==81 then
