@@ -10,6 +10,7 @@ __lua__
 sp = 0 --0=blanc; 1=jaune; 2=rouge
 bdebug=true
 clock=0
+showtuto=false
 --camera
 cx = 0
 cy = 0
@@ -449,6 +450,7 @@ end
 -- menu
 intmenu = 0
 tuto = false
+showtuto=true
 function upmenu()
 	--btn control
 
@@ -456,7 +458,9 @@ function upmenu()
  if btnp(⬆️) then intmenu -=1 end
  if btnp(❎) or btnp(🅾️) then
   if intmenu%3==0 then
- 		menu=false
+  	if(not showtuto)menu=false
+ 		showtuto=false
+ 		tuto=true
  	end
  	if intmenu%3==1 then
  		tuto=not tuto
@@ -532,10 +536,9 @@ function drmenu()
  	
  	print("[c] mine",zx+40, zy+2)
  	print("[x] creating",zx+40, zy+10)
- 	print("your spaceship just crashed on",6,28)
+ 	print("your spaceship just crashed.",6,28)
  	print("")
- 	print("a tiny alien planet... ")
- 	print("repair your rocket and excape! ")
+ 	print("repair your rocket and escape! ")
  	print(" ")
  	color(8)
  	print("but be careful, day and night")
