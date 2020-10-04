@@ -448,23 +448,24 @@ end
 -- menu
 intmenu = 0
 tuto = false
+cred = false
 function upmenu()
 	--btn control
 
  if btnp(⬇️) then intmenu +=1 end
  if btnp(⬆️) then intmenu -=1 end
  if btnp(❎) or btnp(🅾️) then
-  if intmenu%3==0 then
+  if intmenu%4==0 then
  		menu=false
  	end
- 	if intmenu%3==1 then
+ 	if intmenu%4==1 then
  		tuto=not tuto
  	end
- 	if intmenu%3==2 then
-
+ 	if intmenu%4==3 then
+			cred=not cred
  	end
  end
- if intmenu%3==2 then
+ if intmenu%4==2 then
   if btnp(⬅️) then sp =(sp+1)%3 end
   if btnp(➡️) then sp =(sp-1)%3 end
 -- 	if btnp(⬅️) then sp =sp+1 end
@@ -502,19 +503,20 @@ function drmenu()
  	spr(176,56,70, 3,1)
  end
  
- --credits
-  color(7)
- print("mADE BY:",3,72)
- line(3,80-1,32,80-1)
- for i=0,3 do
- 	spr(i+124,3,90+i*9)
+	 --credits
+	if cred then
+	  color(7)
+	 print("mADE BY:",3,72)
+	 line(3,80-1,32,80-1)
+	 for i=0,3 do
+	 	spr(i+124,3,90+i*9)
+	 end
+	 print("raphael - logo",14,83)
+	 print("theobosse - code",14,92)
+	 print("arkanyota - code",14,101)
+	 print("yolwoocle - code and art",14,110)
+	 print("elza - sound",14,119)
  end
- print("raphael - logo",14,83)
- print("theobosse - code",14,92)
- print("arkanyota - code",14,101)
- print("yolwoocle - code and art",14,110)
- print("elza - sound",14,119)
- 
  --tuto
  if tuto then
   local zx = 5
