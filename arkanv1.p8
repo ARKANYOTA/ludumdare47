@@ -346,6 +346,10 @@ function _draw()
 		rectfill(23+cx,5,32+cx,14,7)
 		spr(84+a,24+cx,6)
 		
+		rect(51+cx,4,40+cx,15,1)
+		rectfill(50+cx,5,41+cx,14,7)
+		spr(100+f,42+cx,6)
+		
 		if open then invsee() end
 		
 		--func debug page 3
@@ -375,23 +379,23 @@ function debug()
 		printui("curs tag: "..fget(mget(cux/8, cuy/8)),1,82)
 		
 		]]
-		moux=82+cx
-		mouy=1
-		circ(stat(32)+cx,stat(33),1,1)
-		pset(stat(32)+cx,stat(33),7)	
-		color(7)
-		for ix=-1,1 do
-			for iy=-1,1 do
-				printcoor(ix,iy,1)
-			end
-		end
-		printcoor(0,0,7)
-end
-
-function printcoor(ox,oy,c)
-	print(stat(32)+cx..";"..stat(33),
-								stat(32)+cx+3+ox,
-								stat(33)+oy,c)
+--		moux=82+cx
+--		mouy=1
+--		circ(stat(32)+cx,stat(33),1,1)
+--		pset(stat(32)+cx,stat(33),7)	
+--		color(7)
+--		for ix=-1,1 do
+--			for iy=-1,1 do
+--				printcoor(ix,iy,1)
+--			end
+--		end
+--		printcoor(0,0,7)
+--end
+--
+--function printcoor(ox,oy,c)
+--	print(stat(32)+cx..";"..stat(33),
+--								stat(32)+cx+3+ox,
+--								stat(33)+oy,c)
 end
 -->8
 --functions
@@ -744,7 +748,7 @@ function drawhotbar()
 		printui(inv.c,t+o,sp+tsp*3,7)
 		printui(inv.m,t+o,sp+tsp*4,7)
 		
-	text={"WOOD","STON",
+	text={"WOOD","STONE",
 	"COPP","COAL","AMETH"}
 	tx=5
 	ty=1
