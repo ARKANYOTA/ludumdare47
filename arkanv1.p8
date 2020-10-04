@@ -7,7 +7,7 @@ __lua__
 --yolwoocle
 --and elza
 sp = 0 --0=blanc; 1=jaune; 2=rouge
-bdebug = false
+bdebug = true
 clock=0
 --camera
 cx = 0
@@ -37,14 +37,11 @@ menu=true
 
 --de 1 a 3
 --pioche(pixaxe)
-p=1
+p=4
 --hache(axe)
+a=4
 
-a=1
-pmax = 3
-amax = 3
 inv={w=16,s=0,i=0,c=0,m=0}
-
 open=false
 --requied item
 req={
@@ -58,13 +55,7 @@ req={
 		s={0,2,4},
 		i={0,0,5}
 	},
-	f={
-		w={64,64,64,64},
-		s={64,64,64,64},
-		i={64,64,64,64},
-		c={64,64,64,64},
-		m={64,64,64,64}
-	}
+	f={64,64,64}
 }
 sobj = 0
 
@@ -163,11 +154,17 @@ function _draw()
 		mat=mget(cux/8,cuy/8)
 		t=gettime(mat)
 		if mt>0 and
-		canmine(m) then
+		canmine(mat) then
 		  color(1)
-		  pe=((mt/t)*100)\1
+		  if t==nil then
+		    pe=0
+		  else
+		    pe=((mt/t)*100)\1
+		  end
+		    
 		  lx=cux
 		  ly=cuy
+		  
 		  if rot==0 then
 		    ly-=8
 		  elseif rot==1 then
@@ -281,20 +278,24 @@ function gettime(material)
       return 120
     end
   elseif material==81 then
-    if p==1 then
+    if p==2 then
       return 120
-    elseif p==2 then
-      return 90
     elseif p==3 then
+      return 90
+    elseif p==4 then
       return 70
+    else
+      return 50
     end
   elseif material==82 then
-    if p==1 then
+    if p==2 then
       return 160
-    elseif p==2 then
-      return 130
     elseif p==3 then
-      return 100
+      return 160
+    elseif p==4 then
+      return 140
+    else
+      return 140
     end
   elseif material==83 then
     if p==2 then
@@ -303,6 +304,8 @@ function gettime(material)
       return 75
     elseif p==4 then
       return 50
+    else
+      return 50
     end
   elseif material==84 then
     if p==2 then
@@ -310,6 +313,8 @@ function gettime(material)
     elseif p==3 then
       return 220
     elseif p==4 then
+      return 220
+    else
       return 220
     end
   else
@@ -321,27 +326,23 @@ end
 -- menu
 intmenu = 0
 tuto = false
-info = true
 function upmenu()
 	--btn control
 
  if btnp(⬇️) then intmenu +=1 end
  if btnp(⬆️) then intmenu -=1 end
  if btnp(❎) or btnp(🅾️) then
-  if intmenu%4==0 then
+  if intmenu%3==0 then
  		menu=false
  	end
- 	if intmenu%4==1 then
+ 	if intmenu%3==1 then
  		tuto=not tuto
  	end
- 	if intmenu%4==2 then
+ 	if intmenu%3==2 then
 
  	end
- 	if intmenu%4==3 then
-			info=not info
- 	end
  end
- if intmenu%4==2 then
+ if intmenu%3==2 then
   if btnp(⬅️) then sp =(sp+1)%3 end
   if btnp(➡️) then sp =(sp-1)%3 end
 -- 	if btnp(⬅️) then sp =sp+1 end
@@ -354,29 +355,23 @@ function upmenu()
 end
 
 function drmenu()
+	--print("arkan theodore yolwoocle elza")
 	--affiche
-	if intmenu%4==0 then
- 	spr(130,56,40, 2,1)
+	if intmenu%3==0 then
+ 	spr(132,56,40, 4,1)
  else
  	spr(128,56,40, 4,1)
  end
- if intmenu%4==1 then
- 	spr(146,56,50, 2,1)
+ if intmenu%3==1 then
+ 	spr(148,56,50, 4,1)
  else
  	spr(144,56,50, 4,1)
  end
-
- if intmenu%4==2 then
- 	spr(162,56,60, 2,1)
-
+ if intmenu%3==2 then
+ 	spr(164,56,60, 4,1)
  	spr(4+(sp*16),46,60, 1,1)
  else
  	spr(160,56,60, 4,1)
- end
- if intmenu%4==3 then
- 	spr(178,56,70, 2,1)
- else
- 	spr(176,56,70, 2,1)
  end
  --tuto
  if tuto then
@@ -391,20 +386,17 @@ function drmenu()
  	print("🅾️ break",zx+40, zy+2)
  	print("❎ invntory",zx+40, zy+10)
  end
-
-	if info then
- 	 color(7)
-     print("mADE BY:",3,81)
-     line(3,87,32,87)
-     for i=0,3 do
-	 spr(i+124,3,90+i*9)
-     print("theobosse - code",14,92)
-     print("arkanyota - code",14,101)
-     print("yolwoocle - code and art",14,110)
-     print("elza - sound",14,119)
-    end
+ 
+ color(7)
+ print("mADE BY:",3,81)
+ line(3,87,32,87)
+ for i=0,3 do
+ 	spr(i+124,3,90+i*9)
  end
-
+ print("theobosse - code",14,92)
+ print("arkanyota - code",14,101)
+ print("yolwoocle - code and art",14,110)
+ print("elza - sound",14,119)
 end
 
 
@@ -515,76 +507,72 @@ function invsee()
 	--pioche actuelle
 	rectfill(cx+25, 80, cx+25+9, 80+9, 1)
 	spr(68+p, cx+26, 81)
-	if pmax>=p then
-		--pioche vers upgrade
-	 rectfill(cx+44, 80, cx+44+9, 80+9, 1)
-	 rect(cx+44, 80, cx+44+9, 80+9, 0)
-		spr(69+p, cx+45, 81)
-		--fleche entre 2
-		printui("->",36,82)
 	
-		--couleur du chiffre avant
-		if inv.w < req.p.w[p] then
-			wcolor = 8 else wcolor = 11
-		end
-		if inv.s < req.p.s[p] then
-			scolor = 8 else scolor = 11
-		end
-		if inv.i < req.p.i[p] then
-			icolor = 8 else icolor = 11
-		end
-	
-		--chiffre et sprite de ce que
-		--on a besoin pour craft
-		spr(96,cx+60,81)
-		printui(req.p.w[p],56,82, wcolor)
-		
-		spr(97,cx+75,81)
-		printui(req.p.s[p],71,82, scolor)
-	
-		spr(98,cx+89,81)
-		printui(req.p.i[p],85,82, icolor)
-	else
-		printui("max lvl reached",37,82, 11)
+	--pioche vers upgrade
+ rectfill(cx+44, 80, cx+44+9, 80+9, 1)
+ rect(cx+44, 80, cx+44+9, 80+9, 0)
+	spr(69+p, cx+45, 81)
+	--fleche entre 2
+	printui("->",36,82)
+
+	--couleur du chiffre avant
+	if inv.w < req.p.w[p] then
+		wcolor = 8 else wcolor = 11
 	end
+	if inv.s < req.p.s[p] then
+		scolor = 8 else scolor = 11
+	end
+	if inv.i < req.p.i[p] then
+		icolor = 8 else icolor = 11
+	end
+
+	--chiffre et sprite de ce que
+	--on a besoin pour craft
+	spr(96,cx+60,81)
+	printui(req.p.w[p],56,82, wcolor)
+	
+	spr(97,cx+75,81)
+	printui(req.p.s[p],71,82, scolor)
+
+	spr(98,cx+89,81)
+	printui(req.p.i[p],85,82, icolor)
+
 
 	--hache
 	--upgrade hache
 	--hache actuelle
 	rectfill(cx+25, 91, cx+25+9, 91+9, 1)
 	spr(84+a, cx+26, 92)
-	if amax>=a then
-		--pioche vers upgrade
-	 rectfill(cx+44, 91, cx+44+9, 91+9, 1)
-	 rect(cx+44, 91, cx+44+9, 91+9, 0)
-		spr(85+a, cx+45, 92)
-		--fleche entre 2
-		printui("->",36,93)
-		
-		--couleur du chiffre avant
-		if inv.w < req.a.w[a] then
-			wcolor = 8 else	wcolor = 11
-		end
-		if inv.s < req.a.s[a] then
-			scolor = 8 else scolor = 11
-		end
-		if inv.i < req.a.i[a] then
-			icolor = 8 else icolor = 11
-		end
+
+	--pioche vers upgrade
+ rectfill(cx+44, 91, cx+44+9, 91+9, 1)
+ rect(cx+44, 91, cx+44+9, 91+9, 0)
+	spr(85+a, cx+45, 92)
+	--fleche entre 2
+	printui("->",36,93)
 	
-		--chiffre et sprite de ce que
-		--on a besoin pour craft
-		spr(96,cx+60,92)
-		printui(req.a.w[a],56,93, wcolor)
-		
-		spr(97,cx+75,92)
-		printui(req.a.s[a],71,93, scolor)
-	
-		spr(98,cx+89,92)
-		printui(req.a.i[a],85,93, icolor)
-	else
-		printui("max lvl reached",37,92, 11)
+	--couleur du chiffre avant
+	if inv.w < req.a.w[a] then
+		wcolor = 8 else	wcolor = 11
 	end
+	if inv.s < req.a.s[a] then
+		scolor = 8 else scolor = 11
+	end
+	if inv.i < req.a.i[a] then
+		icolor = 8 else icolor = 11
+	end
+
+	--chiffre et sprite de ce que
+	--on a besoin pour craft
+	spr(96,cx+60,92)
+	printui(req.a.w[a],56,93, wcolor)
+	
+	spr(97,cx+75,92)
+	printui(req.a.s[a],71,93, scolor)
+
+	spr(98,cx+89,92)
+	printui(req.a.i[a],85,93, icolor)
+
 	
 	--selected object
 	--contour
@@ -604,6 +592,17 @@ function invsee()
 		rect(cx+25, 91, cx+25+9, 91+9, 0)
 	end
 	
+	--crafting
+	--pioche
+	printui(sobj, 0,0, 3)
+	printui(debugvar, 0,10, 3)
+	printui(a.."  "..p, 0,100, 3)
+	printui(inv.w.."  "..req.p.w[p], 0,20, 3)
+	printui(inv.w < req.p.w[p], 0,30, 3)
+
+	printui(inv.w.."  "..req.a.w[a], 0,50, 3)
+	printui(inv.w < req.a.w[a], 0,60, 3)
+
 end
 
 
