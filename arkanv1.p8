@@ -141,6 +141,29 @@ function _draw()
 		spr(anims.afk[rot+1]+(sp*16),x,y,1,1)
 		spr(16,cux,cuy)
 		
+		--mining
+		mat=mget(cux/8,cuy/8)
+		t=gettime(mat)
+		if mt>0 and
+		canmine(m) then
+		  color(1)
+		  p=((mt/t)*100)\1
+		  lx=cux
+		  ly=cuy
+		  if rot==0 then
+		    ly-=8
+		  elseif rot==1 then
+		    lx+=8
+		  elseif rot==2 then
+		    ly+=8
+		  elseif rot==3 then
+		    lx-=8
+		  end
+		  
+		  print(p.."%",lx,ly)
+		  color(0)
+		end
+		
 		--inventory
 		--func invsee page 6
 		if open then invsee() end
@@ -212,31 +235,33 @@ end
 
 function gettime(material)
   if material==80 then
-    if a==1 then
+    if a==2 then
       return 90
-    elseif a==2 then
-      return 70
     elseif a==3 then
+      return 70
+    elseif a==4 then
       return 40
     else 
       return 120
     end
   elseif material==81 then
-    if p==1 then
+    if p==2 then
       return 120
-    elseif p==2 then
-      return 90
     elseif p==3 then
+      return 90
+    elseif p==4 then
       return 70
     end
   elseif material==82 then
-    if p==1 then
+    if p==2 then
       return 160
-    elseif p==2 then
-      return 130
     elseif p==3 then
+      return 130
+    elseif p==4 then
       return 100
     end
+  else
+    return 9999
   end
 end
 
