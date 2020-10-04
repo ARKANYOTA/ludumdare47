@@ -94,10 +94,34 @@ function _update60()
 		if clock%10==0 then 
 			safex+=1
 		end
-		for i=1,17 do
-		  mget()
+		
+		if(clock%6==0 and
+		(safex\1)%8==0) then
+		  for i=1,17 do
+		    mat=mget(safex\8+1,i)
+		    if mat==80 then
+		      mset(safex\8+1,i,83)
+		    elseif mat==83 then
+		      mset(safex\8+1,i,81)
+		    elseif mat==81 then
+		      mset(safex\8+1,i,82)
+		    elseif mat==82 then
+		      mset(safex\8+1,i,84)
+		    end
+		  end
+		  
+		  for i=1,17 do
+		    mat=mget(safex\8+15,i)
+		    if rnd(100)<4 and not
+		    (mat==81 or
+		    mat==82 or
+		    mat==83 or
+		    mat==84) then
+		      mset(safex\8+15,i,80)
+		    end
+		  end
 		end
-	 
+		
   --mine
 	 m=mget(cux/8, cuy/8)
 	 if mt>=gettime(m) then
