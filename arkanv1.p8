@@ -256,11 +256,12 @@ function _draw()
 	 rectfill(cx+50,cy+36,cx+87,cy+36,12)
 	 
 	 color(7)
- print("mADE BY:",33,81)
- line(33,87,62,87)
- for i=0,3 do
- 	spr(i+124,33,90+i*9)
+ print("mADE BY:",33,72)
+ line(33,79,62,79)
+ for i=0,4 do
+ 	spr(i+123,32,82+i*9)
  end
+ print("raphael - logo",43,83)
  print("theobosse - code",43,92)
  print("arkanyota - code",43,101)
  print("yolwoocle - code, art",43,110)
