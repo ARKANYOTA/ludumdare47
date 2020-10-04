@@ -23,7 +23,7 @@ rot=2
 sprt=1
 mt=0
 dead=false
-finish=true
+finish=false
 walking=false
 anims={
 	afk=  {1,7,4,9},
@@ -45,7 +45,7 @@ menu=true
 p=1
 --hache(axe)
 a=1
-f=5
+f=1
 pmax = 3
 amax = 3
 fmax = 4
@@ -212,7 +212,8 @@ function _update60()
 		
 		--end
 		mat=mget(cux\8,cuy\8)
-		if btn(🅾️) then
+		if btn(🅾️) and
+		f==5 then
 			if isfuse(mat) then
 			  finish=true
 			end
@@ -428,7 +429,7 @@ function canmine(material)
   if material==80 then
     return true
   elseif material==81 then
-    return p>0
+    return p>1
   elseif material==82 then
     return p>2
   elseif material==83 then
@@ -497,19 +498,19 @@ function gettime(material)
 end
 
 --detect if it's rocket
-  function isfuse(mat)
-    for i=74,80 do
-      if mat==i then
-        return true
-      end
+function isfuse(mat)
+  for i=74,80 do
+    if mat==i then
+      return true
     end
-    for i=90,96 do
-      if mat==i then
-        return true
-      end
-    end
-    return false
   end
+  for i=90,96 do
+    if mat==i then
+      return true
+    end
+  end
+  return false
+end
 
 -->8
 -- menu
