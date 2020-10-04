@@ -46,6 +46,7 @@ amax = 3
 fmax = 3
 inv={w=16,s=0,i=0,c=0,m=0}
 open=false
+mine=0
 --requied item
 req={
 	p={
@@ -72,7 +73,7 @@ debugvar = 0
 -->8
 --init update
 function _init()
- poke(0x5f2d, 1)
+ poke(0x5f2d,1)
 end
 
 function _update60() 
@@ -97,7 +98,7 @@ function _update60()
 	 
   --mine
 	 m=mget(cux/8, cuy/8)
-	 if mt==gettime(m) then
+	 if mt>=gettime(m) then
 	   mining(cux/8, cuy/8)
 	 end
 	 
@@ -440,10 +441,12 @@ if btn(⬅️) then
 	 
 	 m=mget(cux/8, cuy/8)
 	 if btn(🅾️) and
-	 canmine(m) then
+	    canmine(m) and
+     (mine==0 or 
+     mine==m) then
+   mine=m
    if rot==0 and
-     fget(m)==mf
-    	then
+     fget(m)==mf then
        mt+=1
    elseif rot==1 and
      fget(m)==mf
@@ -458,9 +461,11 @@ if btn(⬅️) then
      then
        mt+=1
    else
+     mine=0
      mt=0
    end
  else
+   mine=0
    mt=0
  end
  
