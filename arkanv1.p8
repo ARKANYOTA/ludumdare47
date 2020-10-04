@@ -5,7 +5,7 @@ __lua__
 --theobosse and 
 --yolwoocle
 sp = 0 --0=blanc; 1=jaune; 2=rouge
-bdebug = true
+bdebug = false
 clock=0
 --camera
 cx = 0
@@ -35,8 +35,10 @@ menu=true
 p=2
 --hache(axe)
 a=1
-
-inv={w=16,s=0,i=0}
+pmax = 3
+amax = 3
+--inv={w=16,s=0,i=0,c=0, m=0}
+inv={w=200,s=200,i=200,c=200, m=200}
 open=false
 --requied item
 req={
@@ -50,7 +52,13 @@ req={
 		s={0,2,4},
 		i={0,0,5}
 	},
-	f={64,64,64}
+	f={
+		w={64,64,64,64},
+		s={64,64,64,64},
+		i={64,64,64,64},
+		c={64,64,64,64},
+		m={64,64,64,64}
+	}
 }
 sobj = 0
 
@@ -269,23 +277,27 @@ end
 -- menu
 intmenu = 0
 tuto = false
+info = true
 function upmenu()
 	--btn control
 
  if btnp(⬇️) then intmenu +=1 end
  if btnp(⬆️) then intmenu -=1 end
  if btnp(❎) or btnp(🅾️) then
-  if intmenu%3==0 then
+  if intmenu%4==0 then
  		menu=false
  	end
- 	if intmenu%3==1 then
+ 	if intmenu%4==1 then
  		tuto=not tuto
  	end
- 	if intmenu%3==2 then
+ 	if intmenu%4==2 then
 
  	end
+ 	if intmenu%4==3 then
+			info=not info
+ 	end
  end
- if intmenu%3==2 then
+ if intmenu%4==2 then
   if btnp(⬅️) then sp =(sp+1)%3 end
   if btnp(➡️) then sp =(sp-1)%3 end
 -- 	if btnp(⬅️) then sp =sp+1 end
@@ -298,24 +310,27 @@ function upmenu()
 end
 
 function drmenu()
-	--print("arkan theodore yolwoocle elza")
-	print(sp,0,6,7)
 	--affiche
-	if intmenu%3==0 then
+	if intmenu%4==0 then
  	spr(130,56,40, 2,1)
  else
  	spr(128,56,40, 2,1)
  end
- if intmenu%3==1 then
+ if intmenu%4==1 then
  	spr(146,56,50, 2,1)
  else
  	spr(144,56,50, 2,1)
  end
- if intmenu%3==2 then
+ if intmenu%4==2 then
  	spr(162,56,60, 2,1)
  	spr(4+(sp*16),46,60, 1,1)
  else
  	spr(160,56,60, 2,1)
+ end
+ if intmenu%4==3 then
+ 	spr(178,56,70, 2,1)
+ else
+ 	spr(176,56,70, 2,1)
  end
  --tuto
  if tuto then
@@ -329,6 +344,11 @@ function drmenu()
  	
  	print("🅾️ break",zx+40, zy+2)
  	print("❎ invntory",zx+40, zy+10)
+ end
+	if info then
+ 	--@leo met tout ce que tu veut
+ 	
+ 
  end
 end
 
@@ -432,72 +452,76 @@ function invsee()
 	--pioche actuelle
 	rectfill(cx+25, 80, cx+25+9, 80+9, 1)
 	spr(68+p, cx+26, 81)
+	if pmax>=p then
+		--pioche vers upgrade
+	 rectfill(cx+44, 80, cx+44+9, 80+9, 1)
+	 rect(cx+44, 80, cx+44+9, 80+9, 0)
+		spr(69+p, cx+45, 81)
+		--fleche entre 2
+		printui("->",36,82)
 	
-	--pioche vers upgrade
- rectfill(cx+44, 80, cx+44+9, 80+9, 1)
- rect(cx+44, 80, cx+44+9, 80+9, 0)
-	spr(69+p, cx+45, 81)
-	--fleche entre 2
-	printui("->",36,82)
-
-	--couleur du chiffre avant
-	if inv.w < req.p.w[p] then
-		wcolor = 8 else wcolor = 11
-	end
-	if inv.s < req.p.s[p] then
-		scolor = 8 else scolor = 11
-	end
-	if inv.i < req.p.i[p] then
-		icolor = 8 else icolor = 11
-	end
-
-	--chiffre et sprite de ce que
-	--on a besoin pour craft
-	spr(96,cx+60,81)
-	printui(req.p.w[p],56,82, wcolor)
+		--couleur du chiffre avant
+		if inv.w < req.p.w[p] then
+			wcolor = 8 else wcolor = 11
+		end
+		if inv.s < req.p.s[p] then
+			scolor = 8 else scolor = 11
+		end
+		if inv.i < req.p.i[p] then
+			icolor = 8 else icolor = 11
+		end
 	
-	spr(97,cx+75,81)
-	printui(req.p.s[p],71,82, scolor)
-
-	spr(98,cx+89,81)
-	printui(req.p.i[p],85,82, icolor)
-
+		--chiffre et sprite de ce que
+		--on a besoin pour craft
+		spr(96,cx+60,81)
+		printui(req.p.w[p],56,82, wcolor)
+		
+		spr(97,cx+75,81)
+		printui(req.p.s[p],71,82, scolor)
+	
+		spr(98,cx+89,81)
+		printui(req.p.i[p],85,82, icolor)
+	else
+		printui("max lvl reached",37,82, 11)
+	end
 
 	--hache
 	--upgrade hache
 	--hache actuelle
 	rectfill(cx+25, 91, cx+25+9, 91+9, 1)
 	spr(84+a, cx+26, 92)
-
-	--pioche vers upgrade
- rectfill(cx+44, 91, cx+44+9, 91+9, 1)
- rect(cx+44, 91, cx+44+9, 91+9, 0)
-	spr(85+a, cx+45, 92)
-	--fleche entre 2
-	printui("->",36,93)
+	if amax>=a then
+		--pioche vers upgrade
+	 rectfill(cx+44, 91, cx+44+9, 91+9, 1)
+	 rect(cx+44, 91, cx+44+9, 91+9, 0)
+		spr(85+a, cx+45, 92)
+		--fleche entre 2
+		printui("->",36,93)
+		
+		--couleur du chiffre avant
+		if inv.w < req.a.w[a] then
+			wcolor = 8 else	wcolor = 11
+		end
+		if inv.s < req.a.s[a] then
+			scolor = 8 else scolor = 11
+		end
+		if inv.i < req.a.i[a] then
+			icolor = 8 else icolor = 11
+		end
 	
-	--couleur du chiffre avant
-	if inv.w < req.a.w[a] then
-		wcolor = 8 else	wcolor = 11
-	end
-	if inv.s < req.a.s[a] then
-		scolor = 8 else scolor = 11
-	end
-	if inv.i < req.a.i[a] then
-		icolor = 8 else icolor = 11
-	end
-
-	--chiffre et sprite de ce que
-	--on a besoin pour craft
-	spr(96,cx+60,92)
-	printui(req.a.w[a],56,93, wcolor)
+		--chiffre et sprite de ce que
+		--on a besoin pour craft
+		spr(96,cx+60,92)
+		printui(req.a.w[a],56,93, wcolor)
+		
+		spr(97,cx+75,92)
+		printui(req.a.s[a],71,93, scolor)
 	
-	spr(97,cx+75,92)
-	printui(req.a.s[a],71,93, scolor)
-
-	spr(98,cx+89,92)
-	printui(req.a.i[a],85,93, icolor)
-
+		spr(98,cx+89,92)
+		printui(req.a.i[a],85,93, icolor)
+	else
+		printui("max lvl reached",37,92, 11)
+	end
 	
 	--selected object
 	--contour
@@ -650,10 +674,18 @@ e42eeeeee111111ee111111ebbbbbbbbbbbbbbbb0400000004000000040000000400000000000000
 0000000000000000cccc8888cccc8888000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-55556606555566068888cc0c8888cc0c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-55006666555566068800cccc8888cc0c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-00556660555560660088ccc08888c0cc000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-55556606555560668888cc0c8888c0cc000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+5555dd0d5555dd0d8888cc0c8888cc0c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+5500dddd0550dd0d8800cccc0880cc0c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0055ddd00550d0dd0088ccc00880c0cc000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+5555dd0d5555d0dd8888cc0c8888c0cc000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000cccc8888cccc8888000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+5555dd0d5555dddd8888cc0c8888cccc000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0550dd0d5500dd0d0880cc0c8800cc0c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0550d0dd5550dd0d0880c0cc8880cc0c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+5555d0dd5500dddd8888c0cc8800cccc000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 0000000000000000cccc8888cccc8888000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __gff__
