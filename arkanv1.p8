@@ -263,6 +263,14 @@ function _draw()
 		  		print(pe.."%",lx,ly,7)
 		end
 		
+		color(7)
+		for ix=-1,1 do
+			for iy=-1,1 do
+				color(1)
+				printui("[c] mine  [x] crafting",7+ix,118+iy,1)
+			end
+		end
+		printui("[c] mine  [x] crafting",7,118)
 		--inventory
 		--func invsee page 6
 		if open then invsee() end
@@ -297,7 +305,6 @@ function debug()
 		]]
 		moux=82+cx
 		mouy=1
-		rectfill(cx+80,1,cx+126,mouy+40,0)
 		circ(stat(32)+cx,stat(33),1,1)
 		pset(stat(32)+cx,stat(33),7)	
 		color(7)
@@ -307,10 +314,6 @@ function debug()
 			end
 		end
 		printcoor(0,0,7)
-		print("",moux,mouy+2)
-		print("x "..x)
-		print("y "..y)
-		print("safe "..safex)
 end
 
 function printcoor(ox,oy,c)
@@ -497,7 +500,7 @@ function drmenu()
  --tuto
  if tuto then
   local zx = 5
-  local zy = 40
+  local zy = 5
   rectfill(0,0,127,127,0)
   color(7)
   print("  ⬆️"     ,zx+0, zy+0 )
@@ -507,9 +510,18 @@ function drmenu()
  	
  	print("[c] mine",zx+40, zy+2)
  	print("[x] creating",zx+40, zy+10)
- 	print("your spaceship just crashed on",6,64)
- 	print("a tiny alien planet... mine resources ")
- 	print("and build a spaceship to excape! ")
+ 	print("your spaceship just crashed on",6,28)
+ 	print("")
+ 	print("a tiny alien planet... mine ")
+ 	print("resources and build a ")
+ 	print("spaceship to excape! ")
+ 	print(" ")
+ 	print("but be careful, day and night")
+ 	print("kills you.")
+ 	print(" ")
+ 	print("   crafting:")
+ 	print("  ")
+ 	print("")
  end
  
 
