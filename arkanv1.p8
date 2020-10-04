@@ -21,8 +21,11 @@ rot=0
 sprt=1
 mt=0
 dead=false
+walking=false
 anims={
-	afk={1,7,4,9},
+	afk=  {1,7,4,9},
+	walk1={2,7,5,9},
+	walk2={3,8,6,10},
 }
 
 safex=1
