@@ -31,12 +31,14 @@ safearea=1
 menu=true
 mine = 0
 
---pioche(pixaxe)
-p=3
---hache(axe)
-a=3
 
-inv={w=0,s=0,i=0}
+--de 1 a 3
+--pioche(pixaxe)
+p=1
+--hache(axe)
+a=1
+
+inv={w=16,s=0,i=0}
 open=false
 --requied item
 req={
@@ -49,21 +51,26 @@ req={
 		w={8,16,32},
 		s={0,2,4},
 		i={0,0,5}
-	}
+	},
+	f={64,64,64}
 }
+sobj = 0
 
-
+debugvar = 0
 -->8
 --update
 function _update60() 
 	--movement
 	if menu then
-		upmenu()
+		upmenu() 
 	else
 		clock+=1
 	 cpos()
-	 movement()
-
+	 if open then
+	 	invup()
+	 else
+	 	movement()
+		end
 --hot and cold zones
 		if(clock%6==0)safex+=0.75
 		if(safex>1024)safex=0
@@ -105,6 +112,7 @@ function _update60()
 		cx=x-64+4
 		cy=0
 		camera(cx,cy)
+		
 	end
 end
 -->8
@@ -196,9 +204,9 @@ function canmine(material)
   if material==80 then
     return true
   elseif material==81 then
-    return p>0
+    return p>1
   elseif material==82 then
-    return p>0
+    return p>2
   end
 end
 
@@ -302,32 +310,28 @@ end
 
 function movement()
 mf=0x3
-if btn(⬅️) and 
-	 not open then 
+if btn(⬅️) then 
 	 	 if not (icol(x,y))			and 
 	 			  not (icol(x,y+7))	then 
 	 	 x-=1
 	 	 end
 	 	rot=3
 	 end
-	 if btn(➡️) and 
-	 not open then
+	 if btn(➡️) then
 	   if not (icol(x+7,y))			and 
 	 			  not (icol(x+7,y+7))	then
 	   x+=1
 	   end
 	 	rot=1
 	 end
-	 if btn(⬆️) and 
-	 not open then
+	 if btn(⬆️) then
 	   if not (icol(x+1,y-1))	and 
 	 			  not (icol(x+6,y-1))	then
 	   y-=1
 	   end
 	  rot=0
 	 end
-	 if btn(⬇️) and 
-	 not open then
+	 if btn(⬇️) then
 	   if not (icol(x+1,y+8))	and 
 	 			  not (icol(x+6,y+8))	then
 	   y+=1
@@ -336,8 +340,7 @@ if btn(⬅️) and
 	 end
 	 
 	 m=mget(cux/8, cuy/8)
-	 if btn(🅾️) and 
-	 not open and
+	 if btn(🅾️) and
 	 canmine(m) then
    if rot==0 and
      fget(m)==mf
@@ -363,11 +366,8 @@ if btn(⬅️) and
  end
  
  if btnp(❎) then
-   if open then
-     open=false
-   else
-     open=true
-   end
+		sobj = 0 --objet selectionne
+  open=true
  end
 end
 
@@ -386,6 +386,7 @@ end
 
 -->8
 function invsee()
+	
 	rectfill(
 		cx+25,cy+25,
 		cx+100,cy+100,12)
@@ -404,92 +405,154 @@ function invsee()
 	--pioche
 	--upgrade pioche
 	--pioche actuelle
-	rectfill(cx+25, 91, cx+25+9, 91+9, 1)
-	rect(cx+25, 91, cx+25+9, 91+9, 0)
-	spr(68+p, cx+26, 92)
-	
-	--pioche vers upgrade
- rectfill(cx+44, 91, cx+44+9, 91+9, 1)
- rect(cx+44, 91, cx+44+9, 91+9, 0)
-	spr(69+p, cx+45, 92)
-	--fleche entre 2
-	printui("->",36,93)
-
-	--couleur du chiffre avant
-	if inv.w < req.p.w[p] then
-		wcolor = 8
-	else
-		wcolor = 11
-	end
-	if inv.s < req.p.s[p] then
-		scolor = 8
-	else
-		scolor = 11
-	end
-	if inv.i < req.p.i[p] then
-		icolor = 8
-	else
-		icolor = 11
-	end
-
-	--chiffre et sprite de ce que
-	--on a besoin pour craft
-	spr(96,cx+60,92)
-	printui(req.p.w[p],56,93, wcolor)
-	
-	spr(97,cx+75,92)
-	printui(req.p.s[p],71,93, scolor)
-
-	spr(98,cx+89,92)
-	printui(req.p.i[p],85,93, icolor)
-
-	
-	--hache
-	--upgrade hache
-	--hache actuelle
 	rectfill(cx+25, 80, cx+25+9, 80+9, 1)
-	rect(cx+25, 80, cx+25+9, 80+9, 0)
-	spr(84+a, cx+26, 81)
+	spr(68+p, cx+26, 81)
 	
 	--pioche vers upgrade
  rectfill(cx+44, 80, cx+44+9, 80+9, 1)
  rect(cx+44, 80, cx+44+9, 80+9, 0)
-	spr(85+a, cx+45, 81)
+	spr(69+p, cx+45, 81)
 	--fleche entre 2
 	printui("->",36,82)
 
 	--couleur du chiffre avant
-	if inv.w < req.a.w[a] then
-		wcolor = 8
-	else
-		wcolor = 11
+	if inv.w < req.p.w[p] then
+		wcolor = 8 else wcolor = 11
 	end
-	if inv.s < req.a.s[a] then
-		scolor = 8
-	else
-		scolor = 11
+	if inv.s < req.p.s[p] then
+		scolor = 8 else scolor = 11
 	end
-	if inv.i < req.a.i[a] then
-		icolor = 8
-	else
-		icolor = 11
+	if inv.i < req.p.i[p] then
+		icolor = 8 else icolor = 11
 	end
 
 	--chiffre et sprite de ce que
 	--on a besoin pour craft
 	spr(96,cx+60,81)
-	printui(req.a.w[a],56,82, wcolor)
+	printui(req.p.w[p],56,82, wcolor)
 	
 	spr(97,cx+75,81)
-	printui(req.a.s[a],71,82, scolor)
+	printui(req.p.s[p],71,82, scolor)
 
 	spr(98,cx+89,81)
-	printui(req.a.i[a],85,82, icolor)
+	printui(req.p.i[p],85,82, icolor)
 
-	--crafting
+
+	--hache
+	--upgrade hache
+	--hache actuelle
+	rectfill(cx+25, 91, cx+25+9, 91+9, 1)
+	spr(84+a, cx+26, 92)
+
+	--pioche vers upgrade
+ rectfill(cx+44, 91, cx+44+9, 91+9, 1)
+ rect(cx+44, 91, cx+44+9, 91+9, 0)
+	spr(85+a, cx+45, 92)
+	--fleche entre 2
+	printui("->",36,93)
 	
+	--couleur du chiffre avant
+	if inv.w < req.a.w[a] then
+		wcolor = 8 else	wcolor = 11
+	end
+	if inv.s < req.a.s[a] then
+		scolor = 8 else scolor = 11
+	end
+	if inv.i < req.a.i[a] then
+		icolor = 8 else icolor = 11
+	end
+
+	--chiffre et sprite de ce que
+	--on a besoin pour craft
+	spr(96,cx+60,92)
+	printui(req.a.w[a],56,93, wcolor)
+	
+	spr(97,cx+75,92)
+	printui(req.a.s[a],71,93, scolor)
+
+	spr(98,cx+89,92)
+	printui(req.a.i[a],85,93, icolor)
+
+	
+	--selected object
+	--contour
+	if sobj==0 then --fusee
+		rect(cx+25, 69, cx+25+9, 69+9, 7)
+	else
+		rect(cx+25, 69, cx+25+9, 69+9, 0)
+	end
+	if sobj==1 then --pioche
+		rect(cx+25, 80, cx+25+9, 80+9, 7)
+	else
+		rect(cx+25, 80, cx+25+9, 80+9, 0)
+	end
+	if sobj==2 then --hache
+		rect(cx+25, 91, cx+25+9, 91+9, 7)
+	else
+		rect(cx+25, 91, cx+25+9, 91+9, 0)
+	end
+	
+	--crafting
+	--pioche
+	printui(sobj, 0,0, 3)
+	printui(debugvar, 0,10, 3)
+	printui(a.."  "..p, 0,100, 3)
+	printui(inv.w.."  "..req.p.w[p], 0,20, 3)
+	printui(inv.w < req.p.w[p], 0,30, 3)
+
+	printui(inv.w.."  "..req.a.w[a], 0,50, 3)
+	printui(inv.w < req.a.w[a], 0,60, 3)
+
 end
 
+
+function invup()
+	if btnp(❎) then
+  open=false
+ end
+ if btnp(⬆️) then
+ 	sobj= (sobj-1)%3
+ end
+ if btnp(⬇️) then
+ 	sobj= (sobj+1)%3
+ end
+ if btnp(🅾️) then
+ 	if sobj==0 then --fusee
+ 	 --[[if not (req.f[p] == nil )and 
+ 	 		 not (inv.w < req.p.w[p]) and
+	 	 	 not (inv.s < req.p.s[p]) and
+ 	  	 not (inv.i < req.p.i[p]) then
+ 			inv.w -= req.p.w[p]
+ 			inv.s -= req.p.s[p]
+ 			inv.i -= req.p.i[p]
+ 			p+=1
+ 			
+ 		end]]
+ 	end
+ 	if sobj==1 then --pioche
+ 	 if not (req.p.w[p] == nil )and 
+ 	 		 not (inv.w < req.p.w[p]) and
+	 	 	 not (inv.s < req.p.s[p]) and
+ 	  	 not (inv.i < req.p.i[p]) then
+ 			inv.w -= req.p.w[p]
+ 			inv.s -= req.p.s[p]
+ 			inv.i -= req.p.i[p]
+ 			p+=1
+ 		end
+ 	end
+ 	if sobj==2 then --hache
+ 	 if not (req.a.w[a] == nil )and 
+ 	 		 not (inv.w < req.a.w[a]) and
+	 	 	 not (inv.s < req.a.s[a]) and
+ 	  	 not (inv.i < req.a.i[a]) then
+ 			inv.w -= req.a.w[a]
+ 			inv.s -= req.a.s[a]
+ 			inv.i -= req.a.i[a]
+ 			a+=1
+ 		end
+ 	end
+ end
+end
 __gfx__
 00000000066666600666666006666660077777700777777007777770077777700777777007777770077777700000000000000000000000000000000000000000
 00000000677775566777755667777556765555677655556776555567777655557776555555556777555567770000000000000000000000000000000000000000
@@ -539,14 +602,14 @@ e4444422eddd1eeeeddd1eee22222222bbbbbbbb00000220000005500000099000000cc000000000
 4422e333ddd11d11ddd19981bbbbbbbbbbbbbbbb0444222204445555044499990444cccc00000000000000000000000000000000000000000000000000000000
 4422ee31ddddd111dddd9811bbbbbbbbbbbbbbbb44400220444005504440099044400cc000000000000000000000000000000000000000000000000000000000
 e42eeeeee111111ee111111ebbbbbbbbbbbbbbbb0400000004000000040000000400000000000000000000000000000000000000000000000000000000000000
-00000400000000000099999000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-000044400066560009aa999800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-00044442066666509aa9999800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-00444420666665509a99998800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-04444200666666509999998000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-44442000665665509999880000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-04420000055555008998800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-00200000000000000888000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000040000000000009999900000000000000000000220000006600000099000000cc00000000000000000000000000000000000000000000000000000000000
+000044400066560009aa99980000000000000000000220000006600000099000000cc00000000000000000000000000000000000000000000000000000000000
+00044442066666509aa99998000000000000000000255200006556000095590000c55c0000000000000000000000000000000000000000000000000000000000
+00444420666665509a999988000000000000000000255200006556000095590000c55c0000000000000000000000000000000000000000000000000000000000
+044442006666665099999980000000000000000000255200006556000095590000c55c0000000000000000000000000000000000000000000000000000000000
+44442000665665509999880000000000000000000255552006555560095555900c5555c000000000000000000000000000000000000000000000000000000000
+04420000055555008998800000000000000000000255552006555560095555900c5555c000000000000000000000000000000000000000000000000000000000
+00200000000000000888000000000000000000000255552006555560095555900c5555c000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000cff100000000000003b00000888800
 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ccfff1007777770083bbb0008888880
 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ddccdddd077777718a8bbb0080000808
@@ -600,8 +663,8 @@ __map__
 4141414141414041414141414141414141414041414141414141414241414141414041414140414141524141414141414151414141414140414141414141404141414141414141414141414141414141515141414140414141414141414141414141414140424141414141414141414141414141414141414141414041414141
 4140414141414141504141414041414141414141414140414141414041414141414141414141414141414141414042414141414141414141414040414141414141414141414141414141414141415151414141414141414141414140414141414141414141414141414141414041414141414141404041414141414041414140
 __sfx__
-010100001100034000310002d000290002c1002c1001f0002a1001c0001a000170001600028100140001300012000120002410023100221002210011000120001200014000170001c00021000280002f00031000
-010100001100034000310002d000290002c1002c1001f0002a1001c0001a000170001600028100140001300012000120002410023100221002210011000120001200014000170001c00021000280002f00031000
+000100001100034000310002d000290002c1002c1001f0002a1001c0001a000170001600028100140001300012000120002410023100221002210011000120001200014000170001c00021000280002f00031000
+000100001100034000310002d000290002c1002c1001f0002a1001c0001a000170001600028100140001300012000120002410023100221002210011000120001200014000170001c00021000280002f00031000
 __music__
 00 41434344
 00 41424344
