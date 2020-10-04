@@ -78,10 +78,15 @@ function _update60()
 	 else
 	 	movement()
 		end
---hot and cold zones
-		if(clock%6==0)safex+=0.75
-		if(safex>1024)safex=0
+		
+  --hot and cold zones
+		if(clock%6==0) safex+=0.75
+		if(safex>900) safex=0
+		for i=1,17 do
+		  mget()
+		end
 	 
+  --mine
 	 m=mget(cux/8, cuy/8)
 	 if mt==gettime(m) then
 	   mining(cux/8, cuy/8)
@@ -261,10 +266,12 @@ end
 function gettime(material)
   if material==80 then
     if a==1 then
-      return 90
+      return 120
     elseif a==2 then
-      return 70
+      return 90
     elseif a==3 then
+      return 70
+    elseif a==4 then
       return 40
     else 
       return 120
