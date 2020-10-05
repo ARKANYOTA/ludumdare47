@@ -408,7 +408,6 @@ end
 -->8
 --debug burn
 function debug()
-printui(debugvar,0,0,1)
 end
 
 function burn()
