@@ -570,25 +570,24 @@ function upmenu()
 	--btn control
 
  if btnp(⬇️) and (not showcred)
- and (not tuto)then 
+ 	and (not tuto)then 
  	intmenu +=1
  	sfx(1) 
  end
  if btnp(⬆️) and (not showcred)
- and (not tuto)then 
+ 	and (not tuto)then 
 		intmenu -=1
 		sfx(1) 
 	end
  if btnp(❎) or btnp(🅾️) then
  	sfx(3)
-  if intmenu%4==0 then
-  end
   if intmenu%5==0 then
   	if(not showtuto)menu=false
  		showtuto=false
  		tuto=true
  		setlvl()
- 	end
+ 		end
+ 	
  	if intmenu%5==1 then
  		tuto=not tuto
  	end
@@ -596,8 +595,9 @@ function upmenu()
 			cred=not cred
 			showcred=not showcred
  	end
- end
- if intmenu%4==2 then
+ end -- fin btn x
+ 
+ if intmenu%5==2 then
   if btnp(⬅️) then 
   	sp =(sp+1)%3 
   	sfx(3)
@@ -606,22 +606,17 @@ function upmenu()
   	sp =(sp-1)%3 
   	sfx(3)
   end
- if intmenu%5==2 then
-  if btnp(⬅️) then sp =(sp+1)%3 end
-  if btnp(➡️) then sp =(sp-1)%3 end
--- 	if btnp(⬅️) then sp =sp+1 end
--- 	if btnp(➡️) then sp =sp-1 end
-	end
-	if intmenu%5==4 then
-  if btnp(⬅️) then lvl =(lvl-1)%2 end
-  if btnp(➡️) then lvl =(lvl+1)%2 end
--- 	if btnp(⬅️) then sp =sp+1 end
--- 	if btnp(➡️) then sp =sp-1 end
-	end
- 
  end
- 
- 
+	if intmenu%5==4 then
+  if btnp(⬅️) then 
+  	lvl =(lvl-1)%2 
+  	sfx(3)
+  end
+  if btnp(➡️) or btnp(🅾️)or btnp(❎)  then 
+  	lvl =(lvl+1)%2 
+  	sfx(3)
+  end
+	end
 end
 
 function drmenu()
