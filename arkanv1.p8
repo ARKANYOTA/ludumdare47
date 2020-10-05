@@ -46,7 +46,7 @@ menu=true
 p=1
 --hache(axe)
 a=1
-f=5
+f=1
 pmax = 3
 amax = 3
 fmax = 4
@@ -619,7 +619,7 @@ function upmenu()
 -- 	if btnp(➡️) then sp =sp-1 end
 	end
  
- 
+ end
  
  
 end
@@ -630,7 +630,7 @@ function drmenu()
 	color(5)
 	print("⬆️⬇️ navigate [c] select",25,121)
 	--affiche
-	if intmenu%5==0 then
+  if intmenu%5==0 then
  	spr(131,56,70, 3,1)
  else
  	spr(128,56,70, 3,1)
