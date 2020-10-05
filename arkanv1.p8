@@ -80,7 +80,7 @@ debugvar = 0
 --init update
 function _init()
  poke(0x5f2d,1)
- menuitem(1,"hard mod", hardmod)
+ menuitem(1,"harder mod", hardmod)
 end
 
 function hardmod()
@@ -609,6 +609,13 @@ function drmenu()
  if intmenu%5==4 then
  	spr(137,56,110, 3,1)
  	spr(192+lvl,46,110, 1,1)
+ 	lvllist={"normal","hard","harder"}
+ 	for z=-1,1 do
+ 		for t=-1,1 do
+ 			print(lvllist[lvl+1],80+t,112+z, 1)
+ 		end
+ 	end
+ 	print(lvllist[lvl+1],80,112, 7)
  else
  	spr(134,56,110, 3,1)
  end
@@ -1086,7 +1093,7 @@ function setlvl()
 		safelen = 100
 	end
 	if lvl==2 then
-		spdborder = 3
+		spdborder = 2
 		x=40
 		safelen = 80
 	end
