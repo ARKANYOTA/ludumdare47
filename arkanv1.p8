@@ -106,6 +106,7 @@ function hardmod()
 	sfx(0)
 	lvl = 2
 end
+
 function _update60() 
 	--movement
 	sfxtime-=1
@@ -170,10 +171,10 @@ function _update60()
 		    click=mat
 		  end
 		end
-		
 		--sun cooking
 		if(clock%6==0 and
 		(safex\1)%8==0) then
+			
 		  for i=1,17 do
 		    mat=mget(safex\8+1,i)
 		    if mat==80 then
@@ -455,6 +456,7 @@ end
 -->8
 --debug burn
 function debug()
+	--printui(debugvar, 0,0,2)
 end
 
 function burn()
@@ -1093,11 +1095,16 @@ function invup()
  	 if not (req.f.w[f] == nil)and 
  	 		 not (inv.w < req.f.w[f]) and
 	 	 	 not (inv.s < req.f.s[f]) and
- 	  	 not (inv.i < req.f.i[f]) then
- 			sfx(3)
+ 	  	 not (inv.i < req.f.i[f]) and
+ 		 		not (inv.c < req.f.c[f]) and
+ 	  	 not (inv.m < req.f.m[f]) then
+ 			
+ 		sfx(3)
  			inv.w -= req.f.w[f]
  			inv.s -= req.f.s[f]
  			inv.i -= req.f.i[f]
+ 			inv.c -= req.f.c[f]
+ 			inv.m -= req.f.m[f]
  			f+=1
  			
  		end
@@ -1206,7 +1213,7 @@ function setlvl()
 		safelen = 100
 	end
 	if lvl==2 then
-		spdborder = 2
+		spdborder = 2.1
 		x=40
 		safelen = 80
 	end
